@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -13,17 +14,24 @@
             min-height: 100vh;
             color: white;
             margin: 0;
-            padding: 0;
         }
 
         .neon-pink {
             color: #fff;
-            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff007f, 0 0 40px #ff007f, 0 0 80px #ff007f;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #ff007f,
+                0 0 40px #ff007f,
+                0 0 80px #ff007f;
         }
 
         .neon-gold {
             color: #ffd700;
-            text-shadow: 0 0 5px #ffd700, 0 0 15px #d4af37, 0 0 30px #b8860b;
+            text-shadow: 
+                0 0 5px #ffd700,
+                0 0 15px #d4af37,
+                0 0 30px #b8860b;
         }
 
         .neon-blue-border {
@@ -51,23 +59,14 @@
             box-shadow: 0 0 10px rgba(255, 0, 127, 0.5) !important;
         }
 
-        input::placeholder { color: rgba(255, 255, 255, 0.5); }
-
-        /* סגנונות מיוחדים לטבלת הניהול */
-        .admin-table-container {
-            max-height: 60vh;
-            overflow-y: auto;
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
         }
         
-        .admin-table th {
-            position: sticky;
-            top: 0;
-            background: #1e1b4b;
-            z-index: 10;
-        }
+        .hidden { display: none !important; }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center p-4 min-h-screen relative">
+<body class="flex flex-col items-center justify-center p-4">
 
     <!-- תצוגת טופס הרשמה (רגיל) -->
     <div id="mainView" class="glass-panel w-full max-w-md rounded-3xl p-6 shadow-2xl relative overflow-hidden transition-all duration-500">
@@ -79,13 +78,13 @@
                 <h2 class="text-2xl font-bold tracking-wider text-pink-400">SAVE THE DATE</h2>
                 <h1 class="text-5xl md:text-6xl font-extrabold neon-pink leading-tight">מסיבת<br>פתיחת הקיץ</h1>
                 <div class="text-4xl font-bold neon-gold mt-2">2.7</div>
-                <div class="text-xl">יום חמישי | 21:00 - 00:00</div>
+                <div class="text-xl">יום חמישי | החל מ-21:00</div>
             </div>
 
             <div class="space-y-3 text-base md:text-lg leading-relaxed bg-black/30 p-4 rounded-xl border border-white/10">
                 <p>מתחילים במסורת חדשה בגדות, הפעם מסיבה למבוגרים בלבד בבריכה... 🍹</p>
                 <p>אוכל חופשי, אלכוהול חופשי, ורק מוזיקה וכיף!</p>
-                <p>רוצים לבדוק התכנות ואיך אומרים שזה לא יהיה הקיץ של אביה... תרשמו בהמוניכם שנתחיל מסורת ווואוווווו 🎉</p>
+                <p>לצורך הערכות והתכנות - הירשמו בהמוניכם!<br>שנתחיל מסורת וואוווו 🎉</p>
             </div>
 
             <div class="flex justify-center gap-4 text-base md:text-lg font-semibold flex-wrap">
@@ -95,7 +94,6 @@
             </div>
 
             <form id="registrationForm" class="space-y-5 mt-8">
-                <!-- שדה נסתר לזיהוי הפעולה בשרת -->
                 <input type="hidden" name="action" value="register">
                 <div>
                     <input type="text" name="name" required placeholder="שם מלא" class="w-full px-4 py-3 rounded-xl text-xl">
@@ -116,76 +114,65 @@
         </div>
     </div>
 
-    <!-- כפתור סודי לכניסה להנהלה (למטה בקטן) -->
+    <!-- כפתור כניסה להנהלה -->
     <button onclick="openLoginModal()" class="mt-8 text-sm text-white/30 hover:text-white/80 transition-colors bg-transparent border-none cursor-pointer p-2 z-10 relative">
         🔒 כניסת מנהלים
     </button>
 
-    <!-- מודל התחברות למנהלים -->
-    <div id="loginModal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="glass-panel w-full max-w-sm rounded-2xl p-6 text-center space-y-4">
-            <h3 class="text-2xl font-bold neon-pink">פאנל ניהול</h3>
-            <p class="text-sm text-gray-300">הכנס קוד גישה כדי לצפות בנרשמים</p>
-            <input type="password" id="adminPassInput" placeholder="קוד גישה" class="w-full px-4 py-3 rounded-xl text-center text-xl tracking-widest">
-            <div id="loginError" class="text-red-400 text-sm hidden font-bold">קוד שגוי, נסה שוב.</div>
+    <!-- מודל סיסמה -->
+    <div id="loginModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div class="glass-panel w-full max-w-sm rounded-2xl p-6 text-center">
+            <h3 class="text-2xl font-bold mb-4">קוד מנהל</h3>
+            <input type="password" id="adminCode" placeholder="הכנס קוד" class="w-full px-4 py-3 rounded-xl text-center text-xl tracking-widest mb-4">
             <div class="flex gap-3">
-                <button onclick="closeLoginModal()" class="flex-1 bg-gray-600/50 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-xl transition-all">ביטול</button>
-                <button onclick="verifyLogin()" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-[0_0_10px_rgba(0,243,255,0.3)]">כניסה</button>
+                <button onclick="verifyAdmin()" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl">כניסה</button>
+                <button onclick="closeLoginModal()" class="flex-1 bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 rounded-xl">ביטול</button>
             </div>
+            <div id="loginError" class="hidden text-red-400 mt-3">קוד שגוי</div>
         </div>
     </div>
 
-    <!-- פאנל ניהול (מוסתר כברירת מחדל) -->
-    <div id="adminDashboard" class="hidden glass-panel w-full max-w-4xl rounded-3xl p-4 md:p-8 shadow-2xl relative z-20">
+    <!-- פאנל ניהול נתונים -->
+    <div id="adminView" class="hidden glass-panel w-full max-w-4xl rounded-3xl p-6 shadow-2xl relative z-10 mt-4">
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-3xl font-bold neon-blue-border px-4 py-2 rounded-lg border-none">ניהול נרשמים</h2>
-            <button onclick="logoutAdmin()" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg font-bold text-sm transition-all">יציאה מניהול</button>
+            <h2 class="text-3xl font-bold neon-pink">פאנל ניהול נרשמים</h2>
+            <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg font-bold">התנתק</button>
         </div>
         
-        <div class="grid grid-cols-2 gap-4 mb-6">
-            <div class="bg-pink-900/40 p-4 rounded-xl border border-pink-500/30 text-center">
-                <div class="text-sm text-pink-300">סה"כ נרשמים (קבוצות)</div>
-                <div id="totalRegistrations" class="text-3xl font-bold neon-pink">0</div>
-            </div>
-            <div class="bg-blue-900/40 p-4 rounded-xl border border-blue-500/30 text-center">
-                <div class="text-sm text-blue-300">סה"כ אורחים (אנשים)</div>
-                <div id="totalGuests" class="text-3xl font-bold neon-gold">0</div>
-            </div>
+        <div class="bg-blue-900/40 p-4 rounded-xl mb-6 flex justify-between items-center border border-blue-500/30 flex-wrap gap-4">
+            <div class="text-xl">סה"כ נרשמים (שורות): <span id="totalRows" class="font-bold text-blue-400">0</span></div>
+            <div class="text-xl">סה"כ אורחים (כמות): <span id="totalGuests" class="font-bold text-pink-400">0</span></div>
+            <button onclick="loadData()" class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg font-bold flex items-center gap-2">
+                <span id="refreshIcon">🔄</span> רענן נתונים
+            </button>
         </div>
 
-        <div class="admin-table-container rounded-xl border border-white/20">
-            <table class="w-full text-right admin-table text-sm md:text-base">
+        <div class="overflow-x-auto rounded-xl border border-white/10">
+            <table class="w-full text-right border-collapse">
                 <thead>
-                    <tr class="text-gray-300 border-b border-white/20">
-                        <th class="p-3">שם מלא</th>
-                        <th class="p-3">טלפון</th>
-                        <th class="p-3">כמות</th>
-                        <th class="p-3 text-center">פעולות</th>
+                    <tr class="bg-white/10 text-pink-300">
+                        <th class="p-3 border-b border-white/10 min-w-[150px]">תאריך רישום</th>
+                        <th class="p-3 border-b border-white/10 min-w-[150px]">שם</th>
+                        <th class="p-3 border-b border-white/10 min-w-[120px]">טלפון</th>
+                        <th class="p-3 border-b border-white/10 text-center">כמות</th>
+                        <th class="p-3 border-b border-white/10 text-center">פעולות</th>
                     </tr>
                 </thead>
-                <tbody id="adminTableBody" class="divide-y divide-white/10">
-                    <!-- נתונים יוזרקו לכאן -->
-                    <tr><td colspan="4" class="p-6 text-center text-gray-400">טוען נתונים... ⏳</td></tr>
+                <tbody id="dataTable" class="divide-y divide-white/5">
                 </tbody>
             </table>
         </div>
-        <button onclick="loadAdminData()" class="mt-4 w-full bg-indigo-600/50 hover:bg-indigo-600 text-white py-3 rounded-xl transition-all font-bold">🔄 רענן רשימה</button>
+        <div id="adminMessage" class="hidden text-center mt-4 p-3 rounded-lg"></div>
     </div>
 
     <script>
-        // הכתובת של גוגל סקריפט
         const scriptURL = 'https://script.google.com/macros/s/AKfycby8tZOMWCqbhAzCg5riNDHRn8kCSKDl3sYecEwID0zAlyLbuJwJhLJYvDYLqJ0xJvo/exec';
         const ADMIN_CODE = '12345678';
 
-        // אלמנטים מה-DOM
-        const mainView = document.getElementById('mainView');
-        const loginModal = document.getElementById('loginModal');
-        const adminDashboard = document.getElementById('adminDashboard');
         const form = document.forms['registrationForm'];
         const btn = document.getElementById('submitBtn');
         const msg = document.getElementById('formMessage');
 
-        // טיפול בהגשת הטופס הרגיל
         form.addEventListener('submit', e => {
             e.preventDefault();
             btn.innerHTML = 'שולח... ⏳';
@@ -195,9 +182,9 @@
             const data = new URLSearchParams(new FormData(form));
 
             fetch(scriptURL, { method: 'POST', body: data })
-                .then(response => response.json())
-                .then(result => {
-                    if(result.result === 'success') {
+                .then(res => res.json())
+                .then(response => {
+                    if(response.result === 'success') {
                         msg.innerHTML = 'נרשמתם בהצלחה! נתראה בבריכה 😎';
                         msg.className = 'block text-green-400 bg-green-400/10 font-bold mt-4 p-3 rounded-lg text-center';
                         form.reset();
@@ -208,6 +195,7 @@
                 .catch(error => {
                     msg.innerHTML = 'אופס, משהו השתבש. נסו שוב.';
                     msg.className = 'block text-red-400 bg-red-400/10 font-bold mt-4 p-3 rounded-lg text-center';
+                    console.error('Error!', error.message);
                 })
                 .finally(() => {
                     btn.innerHTML = 'יאללה תרשמו אותי!';
@@ -216,116 +204,124 @@
                 });
         });
 
-        // פונקציות ניהול
-        function openLoginModal() {
-            loginModal.classList.remove('hidden');
-            document.getElementById('adminPassInput').value = '';
-            document.getElementById('loginError').classList.add('hidden');
-            document.getElementById('adminPassInput').focus();
+        function openLoginModal() { 
+            document.getElementById('loginModal').classList.remove('hidden'); 
+            document.getElementById('adminCode').value = ''; 
+            document.getElementById('loginError').classList.add('hidden'); 
+            document.getElementById('adminCode').focus(); 
         }
-
-        function closeLoginModal() {
-            loginModal.classList.add('hidden');
+        
+        function closeLoginModal() { 
+            document.getElementById('loginModal').classList.add('hidden'); 
         }
-
-        function verifyLogin() {
-            const pass = document.getElementById('adminPassInput').value;
-            if (pass === ADMIN_CODE) {
+        
+        function verifyAdmin() {
+            if (document.getElementById('adminCode').value === ADMIN_CODE) {
                 closeLoginModal();
-                mainView.classList.add('hidden');
-                adminDashboard.classList.remove('hidden');
-                loadAdminData();
+                document.getElementById('mainView').classList.add('hidden');
+                document.getElementById('adminView').classList.remove('hidden');
+                loadData();
             } else {
                 document.getElementById('loginError').classList.remove('hidden');
             }
         }
 
         function logoutAdmin() {
-            adminDashboard.classList.add('hidden');
-            mainView.classList.remove('hidden');
+            document.getElementById('adminView').classList.add('hidden');
+            document.getElementById('mainView').classList.remove('hidden');
         }
 
-        function loadAdminData() {
-            const tbody = document.getElementById('adminTableBody');
-            tbody.innerHTML = '<tr><td colspan="4" class="p-6 text-center text-white/50 font-bold">שואב נתונים מהבריכה... ⏳</td></tr>';
-            
-            const params = new URLSearchParams();
-            params.append('action', 'get_all');
+        function loadData() {
+            const tbody = document.getElementById('dataTable');
+            const refreshBtn = document.getElementById('refreshIcon');
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center p-8 text-xl">טוען נתונים... ⏳</td></tr>';
+            refreshBtn.classList.add('animate-spin');
 
-            fetch(scriptURL, { method: 'POST', body: params })
+            const data = new URLSearchParams();
+            data.append('action', 'get_all');
+
+            fetch(scriptURL, { method: 'POST', body: data })
                 .then(res => res.json())
-                .then(data => {
-                    if(data.result === 'success') {
-                        renderTable(data.data);
+                .then(response => {
+                    refreshBtn.classList.remove('animate-spin');
+                    if(response.result === 'success') {
+                        renderTable(response.data);
                     } else {
-                        tbody.innerHTML = '<tr><td colspan="4" class="p-6 text-center text-red-400">שגיאה בטעינת נתונים</td></tr>';
+                        tbody.innerHTML = '<tr><td colspan="5" class="text-center p-8 text-red-400">שגיאה בטעינת נתונים</td></tr>';
                     }
                 })
-                .catch(err => {
-                    console.error(err);
-                    tbody.innerHTML = '<tr><td colspan="4" class="p-6 text-center text-red-400">שגיאת תקשורת עם השרת</td></tr>';
+                .catch(error => {
+                    refreshBtn.classList.remove('animate-spin');
+                    tbody.innerHTML = '<tr><td colspan="5" class="text-center p-8 text-red-400">שגיאת תקשורת</td></tr>';
                 });
         }
 
-        function renderTable(rows) {
-            const tbody = document.getElementById('adminTableBody');
+        function renderTable(data) {
+            const tbody = document.getElementById('dataTable');
             let html = '';
-            let totalPeople = 0;
+            let guestsCount = 0;
 
-            if (!rows || rows.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" class="p-6 text-center text-gray-400">עדיין אין נרשמים</td></tr>';
-                document.getElementById('totalRegistrations').innerText = '0';
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center p-8 text-gray-400">אין עדיין נרשמים</td></tr>';
+                document.getElementById('totalRows').innerText = '0';
                 document.getElementById('totalGuests').innerText = '0';
                 return;
             }
 
-            rows.forEach(row => {
-                const guests = parseInt(row.guests) || 0;
-                totalPeople += guests;
-                // row._rowIndex מגיע מהסקריפט החדש, כדי שנדע איזו שורה למחוק באקסל
+            data.forEach(row => {
+                const date = row.timestamp ? new Date(row.timestamp).toLocaleString('he-IL', {day: '2-digit', month: '2-digit', hour: '2-digit', minute:'2-digit'}) : '-';
+                const numGuests = parseInt(row.guests) || 0;
+                guestsCount += numGuests;
+
                 html += `
-                    <tr class="hover:bg-white/5 transition-colors" id="row-${row._rowIndex}">
-                        <td class="p-3">${row.name || '---'}</td>
-                        <td class="p-3" dir="ltr">${row.phone || '---'}</td>
-                        <td class="p-3 font-bold neon-gold">${guests}</td>
+                    <tr class="hover:bg-white/5 transition-colors">
+                        <td class="p-3">${date}</td>
+                        <td class="p-3 font-bold">${row.name || ''}</td>
+                        <td class="p-3">${row.phone || ''}</td>
+                        <td class="p-3 text-center">${numGuests}</td>
                         <td class="p-3 text-center">
-                            <button onclick="deleteRow(${row._rowIndex})" class="bg-red-500/80 hover:bg-red-500 text-white px-3 py-1 rounded-md text-sm font-bold shadow-[0_0_10px_rgba(255,0,0,0.4)] transition-all">מחק</button>
+                            <button onclick="deleteRow(${row._rowIndex})" class="bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white px-3 py-1 rounded text-sm transition-colors">מחק</button>
                         </td>
                     </tr>
                 `;
             });
 
             tbody.innerHTML = html;
-            document.getElementById('totalRegistrations').innerText = rows.length;
-            document.getElementById('totalGuests').innerText = totalPeople;
+            document.getElementById('totalRows').innerText = data.length;
+            document.getElementById('totalGuests').innerText = guestsCount;
         }
 
         function deleteRow(rowIndex) {
-            const tr = document.getElementById(`row-${rowIndex}`);
-            const originalHtml = tr.innerHTML;
-            tr.innerHTML = `<td colspan="4" class="p-3 text-center text-orange-400 font-bold bg-orange-400/10">מוחק שורה... ⏳</td>`;
+            if(!confirm('בטוח שרוצה למחוק את השורה הזו?')) return;
+            
+            const msg = document.getElementById('adminMessage');
+            msg.className = 'block text-yellow-400 bg-yellow-400/10 font-bold mt-4 p-3 rounded-lg text-center';
+            msg.innerHTML = 'מוחק שורה... ⏳';
 
-            const params = new URLSearchParams();
-            params.append('action', 'delete_row');
-            params.append('rowIndex', rowIndex);
+            const data = new URLSearchParams();
+            data.append('action', 'delete_row');
+            data.append('rowIndex', rowIndex);
 
-            fetch(scriptURL, { method: 'POST', body: params })
+            fetch(scriptURL, { method: 'POST', body: data })
                 .then(res => res.json())
-                .then(data => {
-                    if(data.result === 'success') {
-                        // רענון אוטומטי של הרשימה אחרי מחיקה
-                        loadAdminData();
+                .then(response => {
+                    if(response.result === 'success') {
+                        msg.className = 'block text-green-400 bg-green-400/10 font-bold mt-4 p-3 rounded-lg text-center';
+                        msg.innerHTML = 'השורה נמחקה בהצלחה!';
+                        setTimeout(() => { msg.classList.add('hidden'); }, 3000);
+                        loadData();
                     } else {
-                        tr.innerHTML = `<td colspan="4" class="p-3 text-center text-red-400 bg-red-400/10">שגיאה במחיקה</td>`;
-                        setTimeout(() => { tr.innerHTML = originalHtml; }, 2000);
+                        throw new Error('Delete failed');
                     }
                 })
-                .catch(err => {
-                    console.error(err);
-                    tr.innerHTML = `<td colspan="4" class="p-3 text-center text-red-400 bg-red-400/10">שגיאת רשת</td>`;
-                    setTimeout(() => { tr.innerHTML = originalHtml; }, 2000);
+                .catch(error => {
+                    msg.className = 'block text-red-400 bg-red-400/10 font-bold mt-4 p-3 rounded-lg text-center';
+                    msg.innerHTML = 'שגיאה במחיקה. נסה שוב.';
                 });
         }
     </script>
 </body>
 </html>
+
+
+```
